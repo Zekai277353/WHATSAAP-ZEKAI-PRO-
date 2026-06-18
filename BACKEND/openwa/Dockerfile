@@ -86,12 +86,12 @@ ENV HOME=/app/data
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Expose port
+# Expose port (Railway overrides via PORT env var)
 EXPOSE 2785
 
-# Health check
+# Health check — use PORT env var so it works on Railway (PORT=2785)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:2785/api/health/ready || exit 1
+    CMD curl -f http://localhost:${PORT:-2785}/api/health/ready || exit 1
 
 # dumb-init is PID 1 and handles signal forwarding.
 # It execs docker-entrypoint.sh (as root), which fixes volume ownership and
