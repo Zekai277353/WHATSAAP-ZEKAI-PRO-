@@ -245,7 +245,7 @@ export class WhatsAppWebJsAdapter extends EventEmitter implements IWhatsAppEngin
               };
             }
           } catch (error) {
-            this.logger.error('Error downloading media', String(error));
+            this.logger.warn('Media not available (view-once or expired)', String(error));
           }
         }
 
